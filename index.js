@@ -1,8 +1,17 @@
  
  //get express
  const express = require('express')
+
  //get path (a module in node.js that handles file paths)
  const path = require('path')
+
+ 
+
+ //import our logger
+ const logger = require('./middleware/logger')
+ //import our members
+ const members = require('./public/members')
+
 //initialize express and store in app variable
  const app = express ();
 
@@ -13,12 +22,27 @@
  NOT AVAILABLE THEN WE WANT TO RUN ON PORT 5000
  */
 
+ 
+//  //init or utilize our middleware
+//  app.use(logger)
 
- /*Join the path together i guess.got to a directory name called public and
- get the file called index.html*/
-app.get("/", (req,res)=> {
-    res.sendFile(express.static(path.join(__dirname,"public","index.html")))
-})
+ 
+ //This route gets all members
+app.get("/api/members", (req,res)=> res.json(members))
+
+
+/* Making a static server. A server where you rquest for certain kind of files 
+like html,css, images e.t.c
+*/
+app.use(express.static(path.join(__dirname,"public")))
+
+
+
+//  /*Join the path together i guess. get to a directory name called public and
+//  get the file called index.html*/
+// app.get("/", (req,res)=> {
+//     res.sendFile(path.join(__dirname,"public","index.html"))
+// })
 
 
 
